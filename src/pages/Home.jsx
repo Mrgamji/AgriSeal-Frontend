@@ -1,115 +1,111 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { Sprout, Users, Shield, MessageCircle, TrendingUp, Award } from 'lucide-react';
+import {
+  Sprout,
+  Users,
+  Shield,
+  MessageCircle,
+  TrendingUp,
+  Award
+} from 'lucide-react';
 
 const Home = () => {
   const { user } = useAuth();
 
   const features = [
     {
-      icon: <Sprout className="w-8 h-8 text-primary-600" />,
-      title: "Agricultural Marketplace",
-      description: "Buy and sell/hire crops, seeds, land, tools, and agricultural supplies in one comprehensive platform."
+      icon: <Sprout className="w-8 h-8 text-green-600" />,
+      title: "Smart Marketplace",
+      description: "Connect farmers, buyers, researchers & service providers in one trusted digital ecosystem."
     },
     {
-      icon: <Users className="w-8 h-8 text-primary-600" />,
-      title: "Farmers Community",
-      description: "Connect with fellow farmers, share experiences, and get peer advice on farming challenges."
+      icon: <Users className="w-8 h-8 text-green-600" />,
+      title: "Farmer-Centered Network",
+      description: "Access expert support, trainings, and collaborate with Nigeria’s fastest-growing agri-community."
     },
     {
-      icon: <Shield className="w-8 h-8 text-primary-600" />,
-      title: "Verified Sellers",
-      description: "Trust verified farmers and suppliers with our comprehensive verification system and badges."
+      icon: <Shield className="w-8 h-8 text-green-600" />,
+      title: "Trust & Verification",
+      description: "All listings and profiles are verified, ensuring quality, safety, and professionalism across the board."
     },
     {
-      icon: <MessageCircle className="w-8 h-8 text-primary-600" />,
-      title: "Real-time Communication",
-      description: "Chat directly with buyers and sellers, negotiate prices, and coordinate deliveries."
+      icon: <TrendingUp className="w-8 h-8 text-green-600" />,
+      title: "Data-Driven Insights",
+      description: "Get real-time analytics on market trends, fertilizer efficiency, and buyer behavior."
     },
     {
-      icon: <TrendingUp className="w-8 h-8 text-primary-600" />,
-      title: "Market Insights",
-      description: "Get insights into market trends, pricing, and demand to make informed decisions."
+      icon: <MessageCircle className="w-8 h-8 text-green-600" />,
+      title: "Seamless Communication",
+      description: "Message, negotiate, and plan deliveries right inside the platform—no middlemen, no hassle."
     },
     {
-      icon: <Award className="w-8 h-8 text-primary-600" />,
-      title: "Quality Assurance",
-      description: "Admin-approved listings ensure quality and authenticity of products and services."
+      icon: <Award className="w-8 h-8 text-green-600" />,
+      title: "Biohacked Seeds Project",
+      description: "Our innovative seed solution reduces fertilizer use by up to 50%, improving yields sustainably."
     }
   ];
 
   const categories = [
-    { name: "Fresh Crops", image: "/images/harvest.jpeg", count: "50+" },
-    { name: "Seeds & Plants", image: "/images/plant.jpeg", count: "100+" },
-    { name: "Farm Equipment", image: "/images/tool.jpeg", count: "40+" },
-    { name: "Farmland Rental", image: "/images/farmland.jpeg", count: "15+" }
+    { name: "Crops & Produce", image: "/images/harvest.jpeg", count: "120+" },
+    { name: "Seeds & Biotech", image: "/images/plant.jpeg", count: "80+" },
+    { name: "Farm Equipment", image: "/images/tool.jpeg", count: "60+" },
+    { name: "Land & Lease", image: "/images/farmland.jpeg", count: "25+" }
   ];
 
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-primary-600 to-primary-800 text-white py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
-           
-              Connect. Trade. Grow.
-            </h1>
-            <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto opacity-90">
-              The ultimate agricultural marketplace connecting farmers, buyers, and suppliers 
-              with a thriving community platform.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              {!user ? (
-                <>
-                  <Link to="/register" className="bg-white text-primary-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
-                    Join AgriSeal
-                  </Link>
-                  <Link to="/listings" className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-primary-600 transition-colors">
-                    Browse Listings
-                  </Link>
-                </>
-              ) : (
-                <>
-                  <Link to="/dashboard" className="bg-white text-primary-600 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition-colors">
-                    Go to Dashboard
-                  </Link>
-                  <Link to="/farmers-hub" className="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-primary-600 transition-colors">
-                    Farmers Hub
-                  </Link>
-                </>
-              )}
-            </div>
+      <section className="bg-gradient-to-r from-green-700 to-green-900 text-white py-24">
+        <div className="max-w-6xl mx-auto px-4 text-center">
+          <h1 className="text-5xl font-bold mb-6 leading-tight">
+            Revolutionizing Agriculture in Nigeria
+          </h1>
+          <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto opacity-90">
+            From biohacked seeds that cut fertilizer use by 50% to a full-featured marketplace,
+            AgriSeal empowers every stakeholder—from farm to market.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            {!user ? (
+              <>
+                <Link to="/register" className="bg-white text-green-700 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition">
+                  Join AgriSeal
+                </Link>
+                <Link to="/listings" className="border border-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-green-700 transition">
+                  Browse Listings
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link to="/dashboard" className="bg-white text-green-700 px-8 py-3 rounded-lg font-semibold hover:bg-gray-100 transition">
+                  Go to Dashboard
+                </Link>
+                <Link to="/farmers-hub" className="border border-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-green-700 transition">
+                  Farmers Hub
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </section>
 
       {/* Features Section */}
       <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Why Choose AgriSeal?
+            <h2 className="text-4xl font-bold text-gray-900 mb-4">
+              What Makes AgriSeal Different?
             </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              A comprehensive platform designed specifically for the agricultural community in Nigeria
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+              We’re more than a platform — we’re a movement to digitally transform Nigeria’s agricultural landscape.
             </p>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {features.map((feature, index) => (
-              <div key={index} className="card p-6 text-center hover:scale-105 transition-transform duration-200">
-                <div className="flex justify-center mb-4">
-                  {feature.icon}
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-600 leading-relaxed">
-                  {feature.description}
-                </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {features.map((feature, i) => (
+              <div key={i} className="bg-gray-50 rounded-lg p-6 text-center shadow hover:shadow-md transition">
+                <div className="flex justify-center mb-4">{feature.icon}</div>
+                <h3 className="text-xl font-semibold text-gray-800 mb-2">{feature.title}</h3>
+                <p className="text-gray-600">{feature.description}</p>
               </div>
             ))}
           </div>
@@ -117,39 +113,20 @@ const Home = () => {
       </section>
 
       {/* Categories Section */}
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Explore Categories
-            </h2>
-            <p className="text-xl text-gray-600">
-              Find everything you need for your agricultural business
-            </p>
+      <section className="py-20 bg-gray-100">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-4xl font-bold text-gray-900 mb-2">Explore Agricultural Categories</h2>
+            <p className="text-lg text-gray-600">Buy, lease, or list across Nigeria’s most trusted agri segments</p>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {categories.map((category, index) => (
-              <Link
-                key={index}
-                to="/listings"
-                className="group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300"
-              >
-                <div className="aspect-w-4 aspect-h-3">
-                  <img
-                    src={category.image}
-                    alt={category.name}
-                    className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
-                  />
-                </div>
-                <div className="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-50 transition-opacity duration-300"></div>
-                <div className="absolute inset-0 flex flex-col justify-end p-6">
-                  <h3 className="text-white text-xl font-semibold mb-1">
-                    {category.name}
-                  </h3>
-                  <p className="text-white opacity-90">
-                    {category.count} listings
-                  </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {categories.map((cat, i) => (
+              <Link key={i} to="/listings" className="relative group overflow-hidden rounded-xl shadow hover:shadow-lg transition">
+                <img src={cat.image} alt={cat.name} className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300" />
+                <div className="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-50 transition" />
+                <div className="absolute bottom-0 p-5 text-white">
+                  <h3 className="text-xl font-bold">{cat.name}</h3>
+                  <p className="opacity-90">{cat.count} listings</p>
                 </div>
               </Link>
             ))}
@@ -158,17 +135,15 @@ const Home = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-primary-600">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-            Ready to Transform Your Agricultural Business?
-          </h2>
-          <p className="text-xl text-white opacity-90 mb-8 max-w-2xl mx-auto">
-            Join thousands of farmers, buyers, and suppliers who are already growing their business with AgriSeal.
+      <section className="py-20 bg-green-700">
+        <div className="max-w-5xl mx-auto text-center text-white px-4">
+          <h2 className="text-4xl font-bold mb-4">Be Part of Nigeria’s Agricultural Future</h2>
+          <p className="text-lg opacity-90 mb-6">
+            Whether you're a farmer, biotech innovator, or trader, AgriSeal gives you the tools to scale sustainably.
           </p>
           {!user && (
-            <Link to="/register" className="bg-white text-primary-600 px-8 py-3 rounded-lg font-semibold text-lg hover:bg-gray-100 transition-colors">
-              Get Started Today
+            <Link to="/register" className="bg-white text-green-700 px-8 py-3 rounded-lg text-lg font-semibold hover:bg-gray-100 transition">
+              Get Started with AgriSeal
             </Link>
           )}
         </div>
