@@ -271,12 +271,10 @@ const Register = () => {
           </div>
 
           <div>
-            <button
-              type="submit"
-              disabled={loading}
+            <button disabled
               className="w-full btn-primary py-3 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {loading ? 'Creating account...' : 'Create Account'}
+              {loading ? 'Coming Soon' : 'Backend under Development'}
             </button>
           </div>
 
