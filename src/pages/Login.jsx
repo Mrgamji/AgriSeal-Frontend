@@ -116,13 +116,20 @@ const Login = () => {
 
           <div>
             <button
-              disabled
+              disabled={loading}
               className="w-full btn-primary py-3 text-lg disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {loading ? 'Coming Soon...' : 'Backend is under Development'}
+              {loading ? 'Signing in...' : 'Sign in'}
             </button>
           </div>
 
+          <div className="text-center">
+            <p className="text-sm text-gray-600 mb-4">Demo Accounts:</p>
+            <div className="text-xs text-gray-500 space-y-1">
+              <p><strong>Admin:</strong> admin@agriconnect.com / admin123</p>
+              <p><strong>Test any role:</strong> Create account with any email</p>
+            </div>
+          </div>
         </form>
       </div>
     </div>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useSocket } from '../contexts/SocketContext';
+import ReactMarkdown from 'react-markdown';
 
 import axios from 'axios';
 import {
@@ -94,15 +95,17 @@ const FarmersHub = () => {
     fetchPosts();
   }, [selectedCategory]);
 
-  // Fetch all groups
+  // Fetch all groups (only show approved groups)
   const fetchGroups = async () => {
     setGroupLoading(true);
     try {
       const res = await axios.get('/api/chat/groups');
-      setGroups(res.data);
+      // Only show groups that are approved (status === 'approved')
+      const approvedGroups = res.data.filter(group => group.status === 'approved');
+      setGroups(approvedGroups);
       // Auto-select first group if none selected
-      if (!selectedGroupId && res.data.length > 0) {
-        setSelectedGroupId(res.data[0].id);
+      if (!selectedGroupId && approvedGroups.length > 0) {
+        setSelectedGroupId(approvedGroups[0].id);
       }
     } catch (err) {
       setGroups([]);
@@ -142,7 +145,7 @@ const FarmersHub = () => {
     } catch (err) {}
   };
 
-  // Create new group (verified only)
+  // Create new group (everyone can create)
   const handleCreateGroup = async (e) => {
     e.preventDefault();
     if (!newGroup.name.trim()) return;
@@ -154,6 +157,7 @@ const FarmersHub = () => {
       });
       setShowCreateGroupModal(false);
       setNewGroup({ name: '', description: '' });
+      // Optionally show a message: "Your group will be visible once approved."
       fetchGroups();
     } catch (err) {
     } finally {
@@ -272,15 +276,13 @@ const FarmersHub = () => {
               <div className="card p-4">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="font-semibold text-gray-900">Groups</h3>
-                  {user?.verificationBadge === 'verified' && (
-                    <button
-                      onClick={() => setShowCreateGroupModal(true)}
-                      className="btn-primary btn-xs flex items-center space-x-1"
-                    >
-                      <Plus size={16} />
-                      <span>Create</span>
-                    </button>
-                  )}
+                  <button
+                    onClick={() => setShowCreateGroupModal(true)}
+                    className="btn-primary btn-xs flex items-center space-x-1"
+                  >
+                    <Plus size={16} />
+                    <span>Create</span>
+                  </button>
                 </div>
                 {groupLoading ? (
                   <div className="flex justify-center py-4">
@@ -330,6 +332,7 @@ const FarmersHub = () => {
                   <div className="font-semibold text-lg text-gray-900">
                     {groups.find(g => g.id === selectedGroupId)?.name || 'Select a group'}
                   </div>
+                  by {groups.find(g => g.id === selectedGroupId)?.creator_id}
                 </div>
                 <div className="flex-1 h-96 overflow-y-auto p-4 space-y-4">
                   {selectedGroupId ? (
@@ -536,10 +539,12 @@ const FarmersHub = () => {
             {aiAnswer && (
               <div className="mt-6 bg-gray-50 border rounded p-4">
                 <div className="font-semibold text-gray-700 mb-2">AI Answer:</div>
-                <div className="text-gray-800 whitespace-pre-line">{aiAnswer}</div>
+               <ReactMarkdown className="prose prose-sm">{aiAnswer}</ReactMarkdown>
               </div>
             )}
           </div>
+
+      
         )}
 
         {/* Create Post Modal */}
@@ -660,6 +665,9 @@ const FarmersHub = () => {
                   >
                     {creatingGroup ? 'Creating...' : 'Create Group'}
                   </button>
+                </div>
+                <div className="text-xs text-gray-500 mt-2">
+                  Note: Your group will be visible to others once approved by an admin.
                 </div>
               </form>
             </div>

@@ -15,7 +15,8 @@ import {
   CheckSquare,
   PauseCircle,
   PlayCircle,
-  Search
+  Search,
+  MessageCircle
 } from 'lucide-react';
 
 const AdminPanel = () => {
@@ -25,8 +26,10 @@ const AdminPanel = () => {
   const [allListings, setAllListings] = useState([]);
   const [users, setUsers] = useState([]);
   const [verificationRequests, setVerificationRequests] = useState([]);
+  const [groupRequests, setGroupRequests] = useState([]);
   const [loading, setLoading] = useState(true);
   const [allListingsLoading, setAllListingsLoading] = useState(false);
+  const [groupRequestsLoading, setGroupRequestsLoading] = useState(false);
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
 
@@ -46,6 +49,12 @@ const AdminPanel = () => {
   useEffect(() => {
     if (activeTab === 'allListings') {
       fetchAllListings();
+    }
+  }, [activeTab]);
+
+  useEffect(() => {
+    if (activeTab === 'groupRequests') {
+      fetchGroupRequests();
     }
   }, [activeTab]);
 
@@ -97,6 +106,32 @@ const AdminPanel = () => {
       setVerificationRequests(response.data);
     } catch (error) {
       console.error('Error fetching verification requests:', error);
+    }
+  };
+
+  // Fetch group requests (pending approval)
+  const fetchGroupRequests = async () => {
+    setGroupRequestsLoading(true);
+    try {
+      // This endpoint should return groups with is_approved = 0
+      const response = await axios.get('/api/admin/group-requests');
+      setGroupRequests(response.data);
+    } catch (error) {
+      console.error('Error fetching group requests:', error);
+      setError('Failed to fetch group requests');
+    } finally {
+      setGroupRequestsLoading(false);
+    }
+  };
+
+  // Approve or reject group request
+  const handleGroupRequestAction = async (groupId, action) => {
+    try {
+      await axios.put(`/api/admin/group-requests/${groupId}/${action}`);
+      setMessage(`Group ${action === 'approve' ? 'approved' : 'rejected'} successfully!`);
+      fetchGroupRequests();
+    } catch (error) {
+      setError(error.response?.data?.error || `Failed to ${action} group`);
     }
   };
 
@@ -275,6 +310,23 @@ const AdminPanel = () => {
               >
                 <Shield className="inline w-4 h-4 mr-2" />
                 Verification ({verificationRequests.length})
+              </button>
+
+              <button
+                onClick={() => setActiveTab('groupRequests')}
+                className={`py-2 px-1 border-b-2 font-medium text-sm ${
+                  activeTab === 'groupRequests'
+                    ? 'border-primary-500 text-primary-600'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                }`}
+              >
+                <MessageCircle className="inline w-4 h-4 mr-2" />
+                Group Requests
+                {groupRequests.length > 0 && (
+                  <span className="ml-1 inline-block bg-yellow-200 text-yellow-800 text-xs px-2 py-0.5 rounded-full">
+                    {groupRequests.length}
+                  </span>
+                )}
               </button>
             </nav>
           </div>
@@ -582,8 +634,15 @@ const AdminPanel = () => {
                           </span>
                         </td>
                         <td className="px-3 py-2 whitespace-nowrap">
-                          <div className="text-xs text-gray-900">{listing.seller_name}</div>
-                          <div className="text-xs text-gray-500">{listing.seller_email}</div>
+                          {(() => {
+                            const user = users.find(u => u.id === listing.user_id);
+                            return (
+                              <>
+                                <div className="text-xs text-gray-900">{user ? user.full_name : '-'}</div>
+                                <div className="text-xs text-gray-500">{user ? user.email : '-'}</div>
+                              </>
+                            );
+                          })()}
                         </td>
                         <td className="px-3 py-2 whitespace-nowrap">
                           {listing.price ? (
@@ -613,7 +672,7 @@ const AdminPanel = () => {
                           )}
                         </td>
                         <td className="px-3 py-2 whitespace-nowrap">
-                          {listing.is_frozen ? (
+                          {listing.status==='pending' ? (
                             <button
                               onClick={() => handleFreezeUnfreezeListing(listing.id, false)}
                               className="bg-green-600 hover:bg-green-700 text-white px-2 py-1 rounded flex items-center space-x-1 text-xs"
@@ -790,6 +849,68 @@ const AdminPanel = () => {
                 </h3>
                 <p className="text-gray-600">
                   All verification requests have been processed. New requests will appear here.
+                </p>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Group Requests Tab */}
+        {activeTab === 'groupRequests' && (
+          <div>
+            {groupRequestsLoading ? (
+              <div className="flex justify-center py-8">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
+              </div>
+            ) : groupRequests.length > 0 ? (
+              <div className="space-y-6">
+                {groupRequests.map((group) => (
+                  <div key={group.id} className="card p-6">
+                    <div className="flex items-start justify-between mb-4">
+                      <div className="flex-1">
+                        <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                          {group.name}
+                        </h3>
+                        <p className="text-gray-600 mb-2">{group.description}</p>
+                        <div className="mb-2">
+                          <span className="text-sm text-gray-500">Created by:</span>{' '}
+                          <span className="font-medium">{group.creator_name || '-'}</span>
+                        </div>
+                        <div className="mb-2">
+                          <span className="text-sm text-gray-500">Created at:</span>{' '}
+                          <span className="font-medium">
+                            {group.created_at ? new Date(group.created_at).toLocaleString() : '-'}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex space-x-3">
+                      <button
+                        onClick={() => handleGroupRequestAction(group.id, 'approve')}
+                        className="btn-primary flex items-center space-x-2"
+                      >
+                        <CheckCircle size={18} />
+                        <span>Approve</span>
+                      </button>
+                      <button
+                        onClick={() => handleGroupRequestAction(group.id, 'reject')}
+                        className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg flex items-center space-x-2"
+                      >
+                        <XCircle size={18} />
+                        <span>Reject</span>
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-12">
+                <MessageCircle className="w-16 h-16 text-gray-400 mx-auto mb-4" />
+                <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                  No new group requests
+                </h3>
+                <p className="text-gray-600">
+                  All group requests have been processed. New requests will appear here.
                 </p>
               </div>
             )}
