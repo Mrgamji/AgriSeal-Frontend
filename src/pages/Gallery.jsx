@@ -28,30 +28,6 @@ const GalleryPage = () => {
       caption: 'AgriSeal\'s CEO receives Digital Skills for Entreprenuers Certificate from Hon. Commissioner, Ministry of Rural and Community Development, Kano State',
       category: 'Results'
     },
-    {
-      type: 'image',
-      src: '/gallery/team-meeting.jpg',
-      caption: 'Our interdisciplinary team discussing new formulations',
-      category: 'Team'
-    },
-    {
-      type: 'image',
-      src: '/gallery/conference.jpg',
-      caption: 'Presenting our findings at the African Agri-Tech Summit',
-      category: 'Events'
-    },
-    {
-      type: 'image',
-      src: '/gallery/seed-packaging.jpg',
-      caption: 'Quality control in our seed packaging facility',
-      category: 'Production'
-    },
-    {
-      type: 'image',
-      src: '/gallery/soil-testing.jpg',
-      caption: 'Conducting soil analysis for customized treatments',
-      category: 'Research & Development'
-    }
   ];
 
   return (
