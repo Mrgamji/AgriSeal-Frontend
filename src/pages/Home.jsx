@@ -46,7 +46,7 @@ const Home = () => {
     {
       icon: <Award className="w-8 h-8 text-green-600" />,
       title: "2024 Agri-Innovation Award",
-      description: "Recognized by FAO for sustainable agricultural innovation in West Africa"
+      description: "Recognized by FAO for sustainable agricultural innovation in Kano"
     }
   ];
 
@@ -85,7 +85,7 @@ const Home = () => {
           <h1 className="text-5xl font-bold mb-6 leading-tight">
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 to-yellow-100">
               Biohacked Seeds
-            </span> Revolutionizing African Agriculture
+            </span> Revolutionizing Agriculture
           </h1>
           <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto opacity-90">
             AgriSeal's breakthrough seed technology reduces fertilizer needs by 50% while increasing yields, born from an unlikely collaboration between computer science and biochemistry.
