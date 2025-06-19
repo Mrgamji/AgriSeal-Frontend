@@ -21,10 +21,12 @@ import Gallery from './pages/Gallery'
 import ProjectsPage from './pages/ProjectsPage'
 import Profile from './pages/Profile';
 import AdminPanel from './pages/AdminPanel';
+import TeamPage from './pages/TeamPage';
 
 // Protected Route Component
 import ProtectedRoute from './components/ProtectedRoute';
-import TeamPage from './pages/TeamPage';
+import PostsPage from './pages/PostsPage';
+
 
 function App() {
   return (
@@ -40,6 +42,7 @@ function App() {
                 <Route path="/register" element={<Register />} />
                 <Route path="/gallery" element={<Gallery />} />
                 <Route path="/projects" element={<ProjectsPage />} />
+                <Route path="/posts" element={<PostsPage />} />
                 <Route path="/team" element={<TeamPage />} />
                 <Route path="/listings" element={<Listings />} />
                 <Route path="/listings/:id" element={<ListingDetail />} />
