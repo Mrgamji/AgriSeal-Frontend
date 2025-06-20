@@ -6,6 +6,7 @@ import {
   ArrowRight,
   ChevronLeft,
   ChevronRight,
+  CheckCircle,
   Award,
   Seedling,
   Users,
