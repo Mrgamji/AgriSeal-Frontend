@@ -42,7 +42,7 @@ function App() {
                 <Route path="/register" element={<Register />} />
                 <Route path="/gallery" element={<Gallery />} />
                 <Route path="/projects" element={<ProjectsPage />} />
-                <Route path="/posts" element={<PostsPage />} />
+                <Route path="/blog" element={<PostsPage />} />
                 <Route path="/team" element={<TeamPage />} />
                 <Route path="/listings" element={<Listings />} />
                 <Route path="/listings/:id" element={<ListingDetail />} />
